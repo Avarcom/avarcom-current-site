@@ -704,3 +704,23 @@ body.lock { overflow: hidden; }
     .header__button { padding: 0.5rem 0.8rem; font-size: 0.85rem; gap: 5px; }
   }
 }
+
+/* ======================================================================== */
+/* TEST: ТИМЧАСОВИЙ НАПИС ДЛЯ ПЕРЕВІРКИ PR */
+/* ======================================================================== */
+.test-banner {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  font-size: clamp(5rem, 18vw, 16rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  color: #00ff3b;
+  text-align: center;
+  text-shadow: 0 0 20px rgba(0, 255, 59, 0.55), 0 0 45px rgba(0, 255, 59, 0.35);
+  pointer-events: none;
+  user-select: none;
+}
