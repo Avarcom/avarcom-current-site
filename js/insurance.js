@@ -8,25 +8,8 @@ document.addEventListener("DOMContentLoaded", () => {
 	const dynamicFields = document.getElementById("insuranceDynamicFields");
 	const form = document.getElementById("insuranceForm");
 
-	/*
-		Якщо на сторінці немає модалки або форми,
-		скрипт нічого не робить і не ламає сторінку.
-	*/
-	if (!modal || !form || !modalTitle || !productInput || !dynamicFields) {
-		return;
-	}
-
 	const CONTACT_EMAIL = "vip.strahuvannya@gmail.com";
 
-	/*
-		Каталог страхових продуктів.
-		Поточний режим: focusMode = true, тому на сторінці показується тільки Автоцивілка.
-		Коли буде потрібно відкрити повний каталог, достатньо змінити focusMode на false:
-		- увімкнуться три основні фільтри за предметом страхування;
-		- службові дії "Усі продукти" та "Мій список" будуть винесені окремо;
-		- стане доступним контур "Мій список" через localStorage;
-		- кожна картка матиме бейдж предмета страхування.
-	*/
 	const catalogConfig = {
 		focusMode: true,
 		focusProductKey: "avtotsyvilka",
@@ -500,7 +483,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			return;
 		}
 
-		const subject = encodeURIComponent(`Заявка на прорахунок: ${productInput.value}`);
+		const subject = encodeURIComponent(`Заявка на страхування: ${productInput.value}`);
 		const body = encodeURIComponent(getReadableFormData());
 
 		window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
@@ -516,7 +499,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function initInsuranceCatalogArchitecture() {
-		injectCatalogUiStyles();
 		document.body.classList.toggle("insurance-focus-mode", catalogConfig.focusMode);
 		document.body.classList.toggle("insurance-catalog-open", !catalogConfig.focusMode);
 
@@ -703,180 +685,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		});
 	}
 
-	function injectCatalogUiStyles() {
-		if (document.getElementById("insuranceCatalogRuntimeStyles")) {
-			return;
-		}
-
-		const style = document.createElement("style");
-		style.id = "insuranceCatalogRuntimeStyles";
-		style.textContent = `
-			body.insurance-catalog-open .insurance-products__grid > .insurance-card--product {
-				display: flex !important;
-			}
-
-			body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
-				display: inline-flex !important;
-			}
-
-			.insurance-card {
-				position: relative;
-			}
-
-			.insurance-card__subject-badge {
-				position: absolute;
-				top: 0.85rem;
-				right: 0.85rem;
-				z-index: 2;
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				max-width: calc(100% - 1.7rem);
-				padding: 0.32rem 0.62rem;
-				border-radius: 999px;
-				border: 1px solid rgba(255, 191, 0, 0.30);
-				background: rgba(12, 17, 16, 0.88);
-				color: rgba(255, 219, 105, 0.96);
-				font-size: 0.64rem;
-				font-weight: 900;
-				line-height: 1;
-				text-transform: uppercase;
-				letter-spacing: 0.55px;
-				box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
-			}
-
-			.insurance-card__favorite {
-				width: 2.1rem;
-				height: 2.1rem;
-				flex-shrink: 0;
-				border-radius: 999px;
-				border: 1px solid rgba(255, 191, 0, 0.30);
-				background: rgba(12, 17, 16, 0.72);
-				color: rgba(255, 219, 105, 0.95);
-				font-size: 1.05rem;
-				font-weight: 900;
-				cursor: pointer;
-				transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
-			}
-
-			.insurance-card__favorite:hover,
-			.insurance-card__favorite.active {
-				transform: translateY(-1px);
-				border-color: rgba(255, 191, 0, 0.58);
-				background: rgba(255, 191, 0, 0.12);
-			}
-
-			.insurance-catalog-controls {
-				width: min(100%, 1120px);
-				margin: 0 auto clamp(1rem, 2vw, 1.35rem);
-				padding: clamp(1rem, 2vw, 1.35rem);
-				border-radius: clamp(18px, 2.4vw, 22px);
-				border: 1px solid rgba(255, 191, 0, 0.18);
-				background: linear-gradient(145deg, rgba(28, 36, 31, 0.84) 0%, rgba(12, 17, 16, 0.92) 100%);
-				box-shadow: 0 16px 38px rgba(0, 0, 0, 0.28);
-			}
-
-			.insurance-catalog-controls__head {
-				margin-bottom: 0.9rem;
-			}
-
-			.insurance-catalog-controls__label {
-				margin-bottom: 0.35rem;
-				color: var(--color-gold);
-				font-size: 0.76rem;
-				font-weight: 900;
-				text-transform: uppercase;
-				letter-spacing: 0.85px;
-			}
-
-			.insurance-catalog-controls__text {
-				color: rgba(255, 255, 255, 0.78);
-				font-size: 0.94rem;
-				line-height: 1.45;
-			}
-
-			.insurance-catalog-controls__main,
-			.insurance-catalog-controls__service {
-				display: flex;
-				flex-wrap: wrap;
-				gap: 0.65rem;
-			}
-
-			.insurance-catalog-controls__main {
-				margin-bottom: 0.65rem;
-			}
-
-			.insurance-catalog-controls__service {
-				padding-top: 0.65rem;
-				border-top: 1px solid rgba(255, 255, 255, 0.08);
-			}
-
-			.insurance-catalog-controls__button {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-height: 38px;
-				padding: 0.62rem 0.95rem;
-				border-radius: 999px;
-				font-size: 0.78rem;
-				font-weight: 900;
-				line-height: 1;
-				text-transform: uppercase;
-				letter-spacing: 0.35px;
-				cursor: pointer;
-				transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
-			}
-
-			.insurance-catalog-controls__button--subject {
-				border: 1px solid rgba(255, 191, 0, 0.32);
-				background: rgba(255, 191, 0, 0.08);
-				color: var(--color-gold);
-			}
-
-			.insurance-catalog-controls__button--service {
-				border: 1px solid rgba(255, 255, 255, 0.16);
-				background: rgba(255, 255, 255, 0.04);
-				color: rgba(255, 255, 255, 0.82);
-			}
-
-			.insurance-catalog-controls__button:hover,
-			.insurance-catalog-controls__button.active {
-				transform: translateY(-1px);
-				border-color: rgba(255, 191, 0, 0.56);
-				background: rgba(255, 191, 0, 0.16);
-				color: #ffffff;
-			}
-
-			.insurance-cabinet-shell {
-				margin-top: 0.9rem;
-				padding: 0.85rem 0.95rem;
-				border-radius: 14px;
-				border: 1px dashed rgba(255, 191, 0, 0.24);
-				background: rgba(0, 0, 0, 0.14);
-				color: rgba(255, 255, 255, 0.76);
-				font-size: 0.9rem;
-				line-height: 1.45;
-			}
-
-			.insurance-cabinet-shell strong {
-				color: var(--color-gold);
-			}
-
-			@media (max-width: 640px) {
-				.insurance-card__subject-badge {
-					position: static;
-					align-self: center;
-					margin: -0.15rem auto 0.85rem;
-				}
-
-				.insurance-catalog-controls__main,
-				.insurance-catalog-controls__service {
-					justify-content: center;
-				}
-			}
-		`;
-
-		document.head.appendChild(style);
+	if (!modal || !form || !modalTitle || !productInput || !dynamicFields) {
+		initInsuranceCatalogArchitecture();
+		return;
 	}
 
 	openButtons.forEach((button) => {
