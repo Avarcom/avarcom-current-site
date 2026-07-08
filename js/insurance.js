@@ -18,6 +18,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	const CONTACT_EMAIL = "vip.strahuvannya@gmail.com";
 
+	/*
+		Каталог страхових продуктів.
+		Поточний режим: focusMode = true, тому на сторінці показується тільки Автоцивілка.
+		Коли буде потрібно відкрити повний каталог, достатньо змінити focusMode на false:
+		- увімкнуться фільтри за предметом страхування;
+		- стане доступним контур "Мій список" через localStorage;
+		- картки можна буде сортувати за напрямами: відповідальність, майнове, особисте.
+	*/
+	const catalogConfig = {
+		focusMode: true,
+		focusProductKey: "avtotsyvilka",
+		favoriteStorageKey: "avarcom.insurance.favoriteProducts",
+		subjects: {
+			all: "Усі продукти",
+			liability: "Відповідальність",
+			property: "Майнове",
+			personal: "Особисте",
+			favorites: "Мій список"
+		},
+		productSubjects: {
+			avtotsyvilka: "liability",
+			dcv: "liability",
+			"green-card": "liability",
+			kasko: "property",
+			property: "property",
+			travel: "personal",
+			other: "all"
+		}
+	};
+
 	const products = {
 		avtotsyvilka: {
 			title: "Автоцивілка",
@@ -476,6 +506,161 @@ document.addEventListener("DOMContentLoaded", () => {
 			.replace(/'/g, "&#039;");
 	}
 
+	function initInsuranceCatalogArchitecture() {
+		const cards = document.querySelectorAll(".insurance-card--product");
+
+		cards.forEach((card) => {
+			const productButton = card.querySelector(".insurance-open-modal[data-product]");
+			const rawProductKey = productButton ? productButton.dataset.product : "";
+			const productKey = normalizeProductKey(rawProductKey);
+			const subjectKey = catalogConfig.productSubjects[productKey] || "all";
+
+			card.dataset.insuranceProduct = productKey;
+			card.dataset.insuranceSubject = subjectKey;
+		});
+
+		if (catalogConfig.focusMode) {
+			applyCatalogFocusMode(cards);
+			return;
+		}
+
+		buildCatalogControls(cards);
+		applyCatalogFilter("all", cards);
+	}
+
+	function applyCatalogFocusMode(cards) {
+		cards.forEach((card) => {
+			card.hidden = card.dataset.insuranceProduct !== catalogConfig.focusProductKey;
+		});
+
+		tabs.forEach((tab) => {
+			const tabKey = normalizeProductKey(tab.dataset.productTab);
+			tab.hidden = tabKey !== catalogConfig.focusProductKey;
+		});
+	}
+
+	function buildCatalogControls(cards) {
+		const productsBlock = document.querySelector(".insurance-products");
+
+		if (!productsBlock || document.querySelector("[data-insurance-catalog-controls]")) {
+			return;
+		}
+
+		const controls = document.createElement("section");
+		controls.className = "insurance-catalog-controls";
+		controls.dataset.insuranceCatalogControls = "true";
+		controls.innerHTML = `
+			<div class="insurance-catalog-controls__head">
+				<div class="insurance-catalog-controls__label">Предмет страхування</div>
+				<p class="insurance-catalog-controls__text">
+					Каталог підготовлено до сортування за напрямами: відповідальність, майнове, особисте.
+				</p>
+			</div>
+			<div class="insurance-catalog-controls__buttons">
+				${Object.entries(catalogConfig.subjects).map(([key, label]) => `
+					<button type="button" class="insurance-catalog-controls__button" data-insurance-filter="${key}">
+						${label}
+					</button>
+				`).join("")}
+			</div>
+			<div class="insurance-cabinet-shell" data-insurance-cabinet-shell>
+				<strong>Кабінет клієнта:</strong> контур підготовлено. На наступному етапі тут можна буде зберігати обрані продукти, заявки та документи клієнта.
+			</div>
+		`;
+
+		productsBlock.parentNode.insertBefore(controls, productsBlock);
+
+		controls.querySelectorAll("[data-insurance-filter]").forEach((button) => {
+			button.addEventListener("click", () => {
+				applyCatalogFilter(button.dataset.insuranceFilter || "all", cards);
+			});
+		});
+
+		initFavoriteButtons(cards);
+	}
+
+	function applyCatalogFilter(filterKey, cards) {
+		const favorites = getFavoriteProducts();
+
+		cards.forEach((card) => {
+			const productKey = card.dataset.insuranceProduct;
+			const subjectKey = card.dataset.insuranceSubject;
+			const isFavorite = favorites.includes(productKey);
+			const shouldShow = filterKey === "all"
+				|| subjectKey === filterKey
+				|| (filterKey === "favorites" && isFavorite);
+
+			card.hidden = !shouldShow;
+		});
+
+		document.querySelectorAll("[data-insurance-filter]").forEach((button) => {
+			button.classList.toggle("active", button.dataset.insuranceFilter === filterKey);
+		});
+	}
+
+	function initFavoriteButtons(cards) {
+		cards.forEach((card) => {
+			const top = card.querySelector(".insurance-card__top");
+			const productKey = card.dataset.insuranceProduct;
+
+			if (!top || !productKey || card.querySelector("[data-insurance-favorite]")) {
+				return;
+			}
+
+			const button = document.createElement("button");
+			button.type = "button";
+			button.className = "insurance-card__favorite";
+			button.dataset.insuranceFavorite = productKey;
+			button.setAttribute("aria-label", "Додати продукт до мого списку");
+
+			button.addEventListener("click", () => {
+				toggleFavoriteProduct(productKey);
+				updateFavoriteButtons(cards);
+			});
+
+			top.appendChild(button);
+		});
+
+		updateFavoriteButtons(cards);
+	}
+
+	function getFavoriteProducts() {
+		try {
+			return JSON.parse(localStorage.getItem(catalogConfig.favoriteStorageKey)) || [];
+		} catch (error) {
+			return [];
+		}
+	}
+
+	function setFavoriteProducts(productsList) {
+		localStorage.setItem(catalogConfig.favoriteStorageKey, JSON.stringify(productsList));
+	}
+
+	function toggleFavoriteProduct(productKey) {
+		const favorites = getFavoriteProducts();
+		const nextFavorites = favorites.includes(productKey)
+			? favorites.filter((key) => key !== productKey)
+			: [...favorites, productKey];
+
+		setFavoriteProducts(nextFavorites);
+	}
+
+	function updateFavoriteButtons(cards) {
+		const favorites = getFavoriteProducts();
+
+		cards.forEach((card) => {
+			const productKey = card.dataset.insuranceProduct;
+			const button = card.querySelector("[data-insurance-favorite]");
+			const isFavorite = favorites.includes(productKey);
+
+			if (!button) return;
+
+			button.textContent = isFavorite ? "★" : "☆";
+			button.classList.toggle("active", isFavorite);
+			button.setAttribute("aria-pressed", String(isFavorite));
+		});
+	}
+
 	openButtons.forEach((button) => {
 		button.addEventListener("click", () => {
 			openModal(button.dataset.product || "avtotsyvilka");
@@ -506,5 +691,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	form.addEventListener("submit", sendByEmail);
 
+	initInsuranceCatalogArchitecture();
 	setProduct(currentProductKey);
 });
