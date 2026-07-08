@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 		return;
 	}
 
-	const CONTACT_EMAIL = "avarkom.service@gmail.com";
+	const CONTACT_EMAIL = "vip.strahuvannya@gmail.com";
 
 	const products = {
 		avtotsyvilka: {
