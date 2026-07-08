@@ -44,326 +44,107 @@ document.addEventListener("DOMContentLoaded", () => {
 		avtotsyvilka: {
 			title: "Автоцивілка",
 			fields: [
-				{
-					type: "select",
-					name: "vehicleType",
-					label: "Тип транспортного засобу *",
-					required: true,
-					options: [
-						"Легковий автомобіль",
-						"Вантажний автомобіль",
-						"Мотоцикл",
-						"Причіп",
-						"Інше"
-					]
-				},
-				{
-					type: "select",
-					name: "region",
-					label: "Регіон реєстрації *",
-					required: true,
-					options: [
-						"Київ",
-						"Київська область",
-						"Обласний центр",
-						"Інший населений пункт"
-					]
-				},
-				{
-					type: "select",
-					name: "engine",
-					label: "Об’єм двигуна / тип авто *",
-					required: true,
-					options: [
-						"До 1600 см³",
-						"1601–2000 см³",
-						"2001–3000 см³",
-						"Понад 3000 см³",
-						"Електро"
-					]
-				},
-				{
-					type: "select",
-					name: "benefit",
-					label: "Пільга",
-					required: false,
-					options: [
-						"Немає",
-						"Пенсіонер",
-						"УБД",
-						"Особа з інвалідністю",
-						"Інше"
-					]
-				}
+				selectField("vehicleType", "Тип транспортного засобу *", true, ["Легковий автомобіль", "Вантажний автомобіль", "Мотоцикл", "Причіп", "Інше"]),
+				selectField("region", "Регіон реєстрації *", true, ["Київ", "Київська область", "Обласний центр", "Інший населений пункт"]),
+				selectField("engine", "Об’єм двигуна / тип авто *", true, ["До 1600 см³", "1601–2000 см³", "2001–3000 см³", "Понад 3000 см³", "Електро"]),
+				selectField("benefit", "Пільга", false, ["Немає", "Пенсіонер", "УБД", "Особа з інвалідністю", "Інше"])
 			]
 		},
-
 		dcv: {
 			title: "ДЦВ",
 			fields: [
-				{
-					type: "select",
-					name: "basePolicy",
-					label: "Автоцивілка *",
-					required: true,
-					options: [
-						"Є чинна автоцивілка",
-						"Потрібно оформити разом з автоцивілкою",
-						"Потрібна консультація"
-					]
-				},
-				{
-					type: "select",
-					name: "dcvLimit",
-					label: "Бажаний додатковий ліміт",
-					required: false,
-					options: [
-						"100 000 грн",
-						"250 000 грн",
-						"500 000 грн",
-						"1 000 000 грн",
-						"Потрібна консультація"
-					]
-				},
-				{
-					type: "text",
-					name: "insuranceCompany",
-					label: "Страхова компанія базового поліса",
-					required: false,
-					placeholder: "Якщо автоцивілка вже оформлена"
-				},
-				{
-					type: "date",
-					name: "startDate",
-					label: "Бажана дата початку",
-					required: false
-				}
+				selectField("basePolicy", "Автоцивілка *", true, ["Є чинна автоцивілка", "Потрібно оформити разом з автоцивілкою", "Потрібна консультація"]),
+				selectField("dcvLimit", "Бажаний додатковий ліміт", false, ["100 000 грн", "250 000 грн", "500 000 грн", "1 000 000 грн", "Потрібна консультація"]),
+				textField("insuranceCompany", "Страхова компанія базового поліса", false, "Якщо автоцивілка вже оформлена"),
+				dateField("startDate", "Бажана дата початку", false)
 			]
 		},
-
 		"green-card": {
 			title: "Зелена картка",
 			fields: [
-				{
-					type: "text",
-					name: "country",
-					label: "Країна поїздки *",
-					required: true,
-					placeholder: "Наприклад: Польща"
-				},
-				{
-					type: "select",
-					name: "vehicleType",
-					label: "Тип транспортного засобу *",
-					required: true,
-					options: [
-						"Легковий автомобіль",
-						"Вантажний автомобіль",
-						"Мотоцикл",
-						"Причіп",
-						"Інше"
-					]
-				},
-				{
-					type: "date",
-					name: "startDate",
-					label: "Дата початку *",
-					required: true
-				},
-				{
-					type: "select",
-					name: "period",
-					label: "Період дії *",
-					required: true,
-					options: [
-						"15 днів",
-						"1 місяць",
-						"2 місяці",
-						"3 місяці",
-						"6 місяців",
-						"1 рік"
-					]
-				}
+				textField("country", "Країна поїздки *", true, "Наприклад: Польща"),
+				selectField("vehicleType", "Тип транспортного засобу *", true, ["Легковий автомобіль", "Вантажний автомобіль", "Мотоцикл", "Причіп", "Інше"]),
+				dateField("startDate", "Дата початку *", true),
+				selectField("period", "Період дії *", true, ["15 днів", "1 місяць", "2 місяці", "3 місяці", "6 місяців", "1 рік"])
 			]
 		},
-
 		kasko: {
 			title: "КАСКО",
 			fields: [
-				{
-					type: "text",
-					name: "brand",
-					label: "Марка авто *",
-					required: true,
-					placeholder: "Наприклад: Toyota"
-				},
-				{
-					type: "text",
-					name: "model",
-					label: "Модель авто *",
-					required: true,
-					placeholder: "Наприклад: Camry"
-				},
-				{
-					type: "number",
-					name: "year",
-					label: "Рік випуску *",
-					required: true,
-					placeholder: "2020"
-				},
-				{
-					type: "number",
-					name: "value",
-					label: "Орієнтовна вартість авто",
-					required: false,
-					placeholder: "грн"
-				},
-				{
-					type: "select",
-					name: "risks",
-					label: "Бажані ризики",
-					required: false,
-					options: [
-						"Повне КАСКО",
-						"ДТП",
-						"Викрадення",
-						"Скло / окремі ризики",
-						"Потрібна консультація"
-					]
-				}
+				textField("brand", "Марка авто *", true, "Наприклад: Toyota"),
+				textField("model", "Модель авто *", true, "Наприклад: Camry"),
+				numberField("year", "Рік випуску *", true, "2020"),
+				numberField("value", "Орієнтовна вартість авто", false, "грн"),
+				selectField("risks", "Бажані ризики", false, ["Повне КАСКО", "ДТП", "Викрадення", "Скло / окремі ризики", "Потрібна консультація"])
 			]
 		},
-
 		property: {
 			title: "Страхування майна",
 			fields: [
-				{
-					type: "select",
-					name: "propertyType",
-					label: "Тип майна *",
-					required: true,
-					options: [
-						"Квартира",
-						"Будинок",
-						"Комерційне приміщення",
-						"Інше"
-					]
-				},
-				{
-					type: "text",
-					name: "city",
-					label: "Місто *",
-					required: true,
-					placeholder: "Наприклад: Київ"
-				},
-				{
-					type: "number",
-					name: "propertyValue",
-					label: "Орієнтовна вартість майна",
-					required: false,
-					placeholder: "грн"
-				},
-				{
-					type: "select",
-					name: "propertyRisks",
-					label: "Основні ризики",
-					required: false,
-					options: [
-						"Пожежа",
-						"Затоплення",
-						"Крадіжка",
-						"Комплексний захист",
-						"Потрібна консультація"
-					]
-				}
+				selectField("propertyType", "Тип майна *", true, ["Квартира", "Будинок", "Комерційне приміщення", "Інше"]),
+				textField("city", "Місто *", true, "Наприклад: Київ"),
+				numberField("propertyValue", "Орієнтовна вартість майна", false, "грн"),
+				selectField("propertyRisks", "Основні ризики", false, ["Пожежа", "Затоплення", "Крадіжка", "Комплексний захист", "Потрібна консультація"])
 			]
 		},
-
 		travel: {
 			title: "Туристичне страхування",
 			fields: [
-				{
-					type: "text",
-					name: "country",
-					label: "Країна поїздки *",
-					required: true,
-					placeholder: "Наприклад: Німеччина"
-				},
-				{
-					type: "number",
-					name: "persons",
-					label: "Кількість осіб *",
-					required: true,
-					placeholder: "1"
-				},
-				{
-					type: "date",
-					name: "departureDate",
-					label: "Дата виїзду *",
-					required: true
-				},
-				{
-					type: "date",
-					name: "returnDate",
-					label: "Дата повернення *",
-					required: true
-				},
-				{
-					type: "select",
-					name: "purpose",
-					label: "Мета поїздки",
-					required: false,
-					options: [
-						"Туризм",
-						"Робота",
-						"Навчання",
-						"Спорт",
-						"Інше"
-					]
-				}
+				textField("country", "Країна поїздки *", true, "Наприклад: Німеччина"),
+				numberField("persons", "Кількість осіб *", true, "1"),
+				dateField("departureDate", "Дата виїзду *", true),
+				dateField("returnDate", "Дата повернення *", true),
+				selectField("purpose", "Мета поїздки", false, ["Туризм", "Робота", "Навчання", "Спорт", "Інше"])
 			]
 		},
-
 		other: {
 			title: "Інші види страхування",
 			fields: [
-				{
-					type: "text",
-					name: "object",
-					label: "Що потрібно застрахувати *",
-					required: true,
-					placeholder: "Коротко опишіть об’єкт"
-				},
-				{
-					type: "number",
-					name: "sum",
-					label: "Орієнтовна страхова сума",
-					required: false,
-					placeholder: "грн"
-				},
-				{
-					type: "textarea",
-					name: "details",
-					label: "Опис ситуації *",
-					required: true,
-					placeholder: "Що саме потрібно підібрати?"
-				}
+				textField("object", "Що потрібно застрахувати *", true, "Коротко опишіть об’єкт"),
+				numberField("sum", "Орієнтовна страхова сума", false, "грн"),
+				textareaField("details", "Опис ситуації *", true, "Що саме потрібно підібрати?")
 			]
 		}
 	};
 
 	let currentProductKey = "avtotsyvilka";
 
+	function selectField(name, label, required, options) {
+		return { type: "select", name, label, required, options };
+	}
+
+	function textField(name, label, required, placeholder = "") {
+		return { type: "text", name, label, required, placeholder };
+	}
+
+	function numberField(name, label, required, placeholder = "") {
+		return { type: "number", name, label, required, placeholder };
+	}
+
+	function dateField(name, label, required) {
+		return { type: "date", name, label, required };
+	}
+
+	function textareaField(name, label, required, placeholder = "") {
+		return { type: "textarea", name, label, required, placeholder };
+	}
+
 	function normalizeProductKey(productKey) {
-		if (productKey === "osago") {
-			return "avtotsyvilka";
-		}
-
-		if (!productKey || !products[productKey]) {
-			return "avtotsyvilka";
-		}
-
+		if (productKey === "osago") return "avtotsyvilka";
+		if (!productKey || !products[productKey]) return "avtotsyvilka";
 		return productKey;
+	}
+
+	function ensureCatalogStylesheet() {
+		if (document.querySelector('link[data-insurance-catalog-css="true"]')) return;
+
+		const link = document.createElement("link");
+		const isNestedInsurancePage = window.location.pathname.includes("/insurance/");
+
+		link.rel = "stylesheet";
+		link.href = isNestedInsurancePage ? "../css/insurance-catalog.css" : "css/insurance-catalog.css";
+		link.dataset.insuranceCatalogCss = "true";
+		document.head.appendChild(link);
 	}
 
 	function openModal(productKey = "avtotsyvilka") {
@@ -372,14 +153,10 @@ document.addEventListener("DOMContentLoaded", () => {
 		modal.classList.add("active");
 		modal.setAttribute("aria-hidden", "false");
 		document.body.classList.add("lock");
-
 		setProduct(normalizedKey);
 
 		const closeButton = modal.querySelector(".insurance-modal__close");
-
-		if (closeButton) {
-			closeButton.focus();
-		}
+		if (closeButton) closeButton.focus();
 	}
 
 	function closeModal() {
@@ -444,21 +221,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function getReadableFormData() {
 		const formElements = form.querySelectorAll("input, select, textarea");
-		const lines = [];
-
-		lines.push(`Продукт: ${productInput.value}`);
-		lines.push("");
+		const lines = [`Продукт: ${productInput.value}`, ""];
 
 		formElements.forEach((element) => {
-			if (element.name === "consent") return;
-			if (element.type === "hidden") return;
+			if (element.name === "consent" || element.type === "hidden") return;
 
 			const label = element.dataset.label || getCommonLabel(element.name);
 			const value = element.value.trim();
-
-			if (value) {
-				lines.push(`${label}: ${value}`);
-			}
+			if (value) lines.push(`${label}: ${value}`);
 		});
 
 		return lines.join("\n");
@@ -499,6 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function initInsuranceCatalogArchitecture() {
+		ensureCatalogStylesheet();
 		document.body.classList.toggle("insurance-focus-mode", catalogConfig.focusMode);
 		document.body.classList.toggle("insurance-catalog-open", !catalogConfig.focusMode);
 
@@ -538,10 +309,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function buildCatalogControls(cards) {
 		const productsBlock = document.querySelector(".insurance-products");
-
-		if (!productsBlock || document.querySelector("[data-insurance-catalog-controls]")) {
-			return;
-		}
+		if (!productsBlock || document.querySelector("[data-insurance-catalog-controls]")) return;
 
 		const controls = document.createElement("section");
 		controls.className = "insurance-catalog-controls";
@@ -549,27 +317,18 @@ document.addEventListener("DOMContentLoaded", () => {
 		controls.innerHTML = `
 			<div class="insurance-catalog-controls__head">
 				<div class="insurance-catalog-controls__label">Предмет страхування</div>
-				<p class="insurance-catalog-controls__text">
-					Основне сортування страхових продуктів: відповідальність, майнове, особисте.
-				</p>
+				<p class="insurance-catalog-controls__text">Основне сортування страхових продуктів: відповідальність, майнове, особисте.</p>
 			</div>
-
 			<div class="insurance-catalog-controls__main" aria-label="Фільтр за предметом страхування">
 				${Object.entries(catalogConfig.subjectFilters).map(([key, label]) => `
-					<button type="button" class="insurance-catalog-controls__button insurance-catalog-controls__button--subject" data-insurance-filter="${key}">
-						${label}
-					</button>
+					<button type="button" class="insurance-catalog-controls__button insurance-catalog-controls__button--subject" data-insurance-filter="${key}">${label}</button>
 				`).join("")}
 			</div>
-
 			<div class="insurance-catalog-controls__service" aria-label="Службові фільтри каталогу">
 				${Object.entries(catalogConfig.utilityFilters).map(([key, label]) => `
-					<button type="button" class="insurance-catalog-controls__button insurance-catalog-controls__button--service" data-insurance-filter="${key}">
-						${label}
-					</button>
+					<button type="button" class="insurance-catalog-controls__button insurance-catalog-controls__button--service" data-insurance-filter="${key}">${label}</button>
 				`).join("")}
 			</div>
-
 			<div class="insurance-cabinet-shell" data-insurance-cabinet-shell>
 				<strong>Кабінет клієнта:</strong> контур підготовлено. На наступному етапі тут можна буде зберігати обрані продукти, заявки та документи клієнта.
 			</div>
@@ -593,9 +352,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const productKey = card.dataset.insuranceProduct;
 			const subjectKey = card.dataset.insuranceSubject;
 			const isFavorite = favorites.includes(productKey);
-			const shouldShow = filterKey === "all"
-				|| subjectKey === filterKey
-				|| (filterKey === "favorites" && isFavorite);
+			const shouldShow = filterKey === "all" || subjectKey === filterKey || (filterKey === "favorites" && isFavorite);
 
 			card.hidden = !shouldShow;
 		});
@@ -610,9 +367,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const subjectKey = card.dataset.insuranceSubject || "all";
 			const label = catalogConfig.subjectBadgeLabels[subjectKey] || catalogConfig.subjectBadgeLabels.all;
 
-			if (card.querySelector("[data-insurance-subject-badge]")) {
-				return;
-			}
+			if (card.querySelector("[data-insurance-subject-badge]")) return;
 
 			const badge = document.createElement("span");
 			badge.className = "insurance-card__subject-badge";
@@ -627,9 +382,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const top = card.querySelector(".insurance-card__top");
 			const productKey = card.dataset.insuranceProduct;
 
-			if (!top || !productKey || card.querySelector("[data-insurance-favorite]")) {
-				return;
-			}
+			if (!top || !productKey || card.querySelector("[data-insurance-favorite]")) return;
 
 			const button = document.createElement("button");
 			button.type = "button";
@@ -707,15 +460,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	});
 
 	modal.addEventListener("click", (event) => {
-		if (event.target.hasAttribute("data-insurance-close")) {
-			closeModal();
-		}
+		if (event.target.hasAttribute("data-insurance-close")) closeModal();
 	});
 
 	document.addEventListener("keydown", (event) => {
-		if (event.key === "Escape" && modal.classList.contains("active")) {
-			closeModal();
-		}
+		if (event.key === "Escape" && modal.classList.contains("active")) closeModal();
 	});
 
 	form.addEventListener("submit", sendByEmail);
