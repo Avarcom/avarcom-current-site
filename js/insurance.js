@@ -76,6 +76,49 @@ document.addEventListener("DOMContentLoaded", () => {
 			]
 		},
 
+		dcv: {
+			title: "ДЦВ",
+			fields: [
+				{
+					type: "select",
+					name: "basePolicy",
+					label: "Автоцивілка *",
+					required: true,
+					options: [
+						"Є чинна автоцивілка",
+						"Потрібно оформити разом з автоцивілкою",
+						"Потрібна консультація"
+					]
+				},
+				{
+					type: "select",
+					name: "dcvLimit",
+					label: "Бажаний додатковий ліміт",
+					required: false,
+					options: [
+						"100 000 грн",
+						"250 000 грн",
+						"500 000 грн",
+						"1 000 000 грн",
+						"Потрібна консультація"
+					]
+				},
+				{
+					type: "text",
+					name: "insuranceCompany",
+					label: "Страхова компанія базового поліса",
+					required: false,
+					placeholder: "Якщо автоцивілка вже оформлена"
+				},
+				{
+					type: "date",
+					name: "startDate",
+					label: "Бажана дата початку",
+					required: false
+				}
+			]
+		},
+
 		"green-card": {
 			title: "Зелена картка",
 			fields: [
