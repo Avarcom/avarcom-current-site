@@ -1,0 +1,168 @@
+/* ======================================================================== */
+/* СТОРІНКА: ЕКСПЕРТИЗА */
+/* Файл: css/expertise.css */
+/* ======================================================================== */
+
+.expertise-page {
+  min-height: 100vh;
+  padding-top: 7.2rem;
+  padding-bottom: 3.2rem;
+  background:
+    radial-gradient(circle at 8% 14%, rgba(255, 191, 0, 0.08), transparent 19rem),
+    radial-gradient(circle at 82% 16%, rgba(75, 34, 143, 0.18), transparent 22rem),
+    linear-gradient(180deg, #181229 0%, #161022 40%, #3a0610 100%);
+}
+
+.expertise-room {
+  position: relative;
+  z-index: 5;
+}
+
+.expertise-room__container {
+  width: min(100% - 2rem, 1240px);
+  margin: 0 auto;
+}
+
+.expertise-room__intro {
+  max-width: 940px;
+  margin: 0 0 1.6rem 0;
+}
+
+.expertise-room__label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.85rem;
+  padding: 0.45rem 1rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 191, 0, 0.38);
+  background: rgba(255, 191, 0, 0.10);
+  color: var(--color-gold);
+  font-size: 0.8rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.expertise-room__title {
+  color: #ffffff;
+  font-size: clamp(2.6rem, 6vw, 4.8rem);
+  line-height: 0.95;
+  font-weight: 900;
+  margin-bottom: 0.9rem;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+}
+
+.expertise-room__subtitle {
+  max-width: 980px;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: clamp(1rem, 1.4vw, 1.18rem);
+  line-height: 1.55;
+}
+
+.expertise-placeholder-card {
+  max-width: 900px;
+  padding: 1.7rem 1.7rem 1.5rem;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #1c241f 0%, #0c1110 100%);
+  border: 1px solid rgba(255, 191, 0, 0.16);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.42),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.04);
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+@media (hover: hover) {
+  .expertise-placeholder-card:hover {
+    transform: translateY(-7px) translateX(6px);
+    border-color: rgba(255, 191, 0, 0.30);
+    box-shadow:
+      0 24px 54px rgba(0, 0, 0, 0.48),
+      0 0 0 1px rgba(255, 191, 0, 0.08),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.05);
+  }
+}
+
+.expertise-placeholder-card__title {
+  color: #ffffff;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  line-height: 1.08;
+  font-weight: 900;
+  margin-bottom: 0.8rem;
+}
+
+.expertise-placeholder-card__text {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: clamp(0.98rem, 1.1vw, 1.05rem);
+  line-height: 1.62;
+}
+
+.expertise-room__back {
+  margin-top: 1.2rem;
+}
+
+.expertise-back-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--color-gold);
+  font-size: 0.88rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition:
+    color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.expertise-back-link:hover {
+  color: var(--color-gold-hover);
+  transform: translateX(-2px);
+}
+
+/* ======================================================================== */
+/* АДАПТИВНІСТЬ */
+/* ======================================================================== */
+
+@media (max-width: 900px) {
+  .expertise-page {
+    padding-top: 6.6rem;
+    padding-bottom: 3rem;
+  }
+
+  .expertise-room__intro {
+    max-width: 100%;
+    margin-bottom: 1.6rem;
+  }
+
+  .expertise-placeholder-card {
+    max-width: 100%;
+    padding: 1.6rem 1.4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .expertise-page {
+    padding-top: 5.9rem;
+  }
+
+  .expertise-room__intro {
+    text-align: center;
+  }
+
+  .expertise-room__subtitle {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .expertise-placeholder-card {
+    border-radius: 18px;
+    padding: 1.35rem 1.1rem;
+  }
+
+  .expertise-room__back {
+    text-align: center;
+  }
+}

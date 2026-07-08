@@ -1,0 +1,77 @@
+/* ======================================================================== */
+/* СПІЛЬНІ КАРТКИ ВНУТРІШНІХ СТОРІНОК */
+/* Файл: css/room-cards.css */
+/* ======================================================================== */
+
+:is(
+  .insurance-card,
+  .dtp-placeholder-card,
+  .expertise-placeholder-card,
+  .legal-placeholder-card
+) {
+  position: relative;
+  overflow: hidden;
+  border-color: rgba(255, 191, 0, 0.28);
+  box-shadow:
+    0 16px 42px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 191, 0, 0.08),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.05);
+}
+
+:is(
+  .insurance-card,
+  .dtp-placeholder-card,
+  .expertise-placeholder-card,
+  .legal-placeholder-card
+)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 215, 0, 0.16) 0%,
+      rgba(255, 191, 0, 0.05) 28%,
+      rgba(255, 191, 0, 0.00) 55%
+    );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+:is(
+  .insurance-card,
+  .dtp-placeholder-card,
+  .expertise-placeholder-card,
+  .legal-placeholder-card
+) > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  :is(
+    .insurance-card,
+    .dtp-placeholder-card,
+    .expertise-placeholder-card,
+    .legal-placeholder-card
+  ):hover {
+    transform: translateY(-7px) translateX(6px);
+    border-color: rgba(255, 215, 0, 0.62);
+    box-shadow:
+      0 26px 60px rgba(0, 0, 0, 0.52),
+      0 0 0 2px rgba(255, 191, 0, 0.24),
+      0 0 26px rgba(255, 191, 0, 0.16),
+      inset 1px 1px 2px rgba(255, 255, 255, 0.06);
+  }
+
+  :is(
+    .insurance-card,
+    .dtp-placeholder-card,
+    .expertise-placeholder-card,
+    .legal-placeholder-card
+  ):hover::before {
+    opacity: 1;
+  }
+}
