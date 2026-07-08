@@ -11,6 +11,14 @@
 	<!-- Стилі сторінки страхування -->
 	<link rel="stylesheet" href="css/insurance.css">
 
+	<!-- Тимчасовий focus mode: показуємо тільки Автоцивілку -->
+	<style>
+		.insurance-products__grid>.insurance-card--product:not(:first-child),
+		.insurance-modal__tabs [data-product-tab]:not([data-product-tab="avtotsyvilka"]) {
+			display: none;
+		}
+	</style>
+
 	<!-- Іконка сайту -->
 	<link rel="icon" href="img/favicon-as-final.png" type="image/png">
 
