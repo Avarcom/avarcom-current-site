@@ -8,6 +8,10 @@ body.insurance-focus-mode .insurance-modal__tabs [data-product-tab]:not([data-pr
 	display: none;
 }
 
+body.insurance-focus-mode .insurance-card__subject-badge {
+	display: none;
+}
+
 body.insurance-catalog-open .insurance-products__grid > .insurance-card--product {
 	display: flex;
 }
@@ -39,6 +43,8 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 	line-height: 1;
 	text-transform: uppercase;
 	letter-spacing: 0.55px;
+	white-space: nowrap;
+	pointer-events: none;
 	box-shadow: 0 8px 18px rgba(0, 0, 0, 0.28);
 }
 
@@ -161,9 +167,10 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 
 @media (max-width: 640px) {
 	.insurance-card__subject-badge {
-		position: static;
-		align-self: center;
-		margin: -0.15rem auto 0.85rem;
+		top: 0.7rem;
+		right: 0.7rem;
+		font-size: 0.56rem;
+		padding: 0.28rem 0.5rem;
 	}
 
 	.insurance-catalog-controls__main,
