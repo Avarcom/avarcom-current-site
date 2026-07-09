@@ -35,7 +35,29 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	// ==========================================
-	// 2. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
+	// 2. РОЗМІЩЕННЯ БЕЙДЖА ПРЕДМЕТА СТРАХУВАННЯ
+	// ==========================================
+	const insuranceProductsGrid = document.querySelector('.insurance-products__grid');
+
+	function placeInsuranceSubjectBadges() {
+		document.querySelectorAll('.insurance-card--product').forEach((card) => {
+			const heading = card.querySelector('.insurance-card__heading');
+			const badge = card.querySelector('[data-insurance-subject-badge]');
+
+			if (!heading || !badge || badge.parentElement === heading) return;
+			heading.appendChild(badge);
+		});
+	}
+
+	if (insuranceProductsGrid) {
+		const badgeObserver = new MutationObserver(placeInsuranceSubjectBadges);
+		badgeObserver.observe(insuranceProductsGrid, { childList: true, subtree: true });
+		placeInsuranceSubjectBadges();
+		requestAnimationFrame(placeInsuranceSubjectBadges);
+	}
+
+	// ==========================================
+	// 3. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
 	// ==========================================
 	const header = document.querySelector('.header');
 	function checkScroll() {
@@ -49,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 3. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
+	// 4. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
 	// ==========================================
 	const burger = document.querySelector('.header__burger');
 	const menuBody = document.querySelector('.header__body');
@@ -73,7 +95,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 4. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
+	// 5. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
 	// ==========================================
 	const guideDescriptions = document.querySelectorAll('.opt-desc');
 	guideDescriptions.forEach((description) => {
@@ -83,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	// ==========================================
-	// 5. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
+	// 6. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
 	// ==========================================
 
 	const chatBtn = document.querySelector('.chat-dropdown__btn');
@@ -160,7 +182,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 6. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
+// 7. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
 // ==========================================
 document.addEventListener('keydown', function (e) {
 	if (e.key === 'Escape') {
