@@ -15,6 +15,25 @@ document.addEventListener("DOMContentLoaded", function () {
 		link.remove();
 	});
 
+	const launchTextReplacements = [
+		{
+			selector: '.glass-card-slim__desc',
+			from: 'Автоцивілка, КАСКО, Зелена картка',
+			to: 'Автоцивілка та додатковий захист ДЦВ'
+		},
+		{
+			selector: '.service-item__text',
+			from: 'автоцивілка, КАСКО, Зелена картка, туристичне страхування та інші напрями.',
+			to: 'автоцивілка та додатковий захист ДЦВ.'
+		}
+	];
+
+	launchTextReplacements.forEach(({ selector, from, to }) => {
+		document.querySelectorAll(selector).forEach((element) => {
+			element.textContent = element.textContent.replace(from, to);
+		});
+	});
+
 	// ==========================================
 	// 2. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
 	// ==========================================
