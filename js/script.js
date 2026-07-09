@@ -1,3 +1,17 @@
+(function initHomeHeroNarrowStylesheet() {
+	const pageName = window.location.pathname.split('/').filter(Boolean).pop() || 'index.html';
+	const isHomepage = pageName === 'index.html' || pageName === '';
+
+	if (!isHomepage) return;
+	if (document.querySelector('link[data-home-hero-narrow-css="true"]')) return;
+
+	const link = document.createElement('link');
+	link.rel = 'stylesheet';
+	link.href = 'css/home-hero-narrow.css';
+	link.dataset.homeHeroNarrowCss = 'true';
+	document.head.appendChild(link);
+})();
+
 document.addEventListener("DOMContentLoaded", function () {
 
 	// ==========================================
