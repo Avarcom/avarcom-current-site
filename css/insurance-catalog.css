@@ -178,6 +178,10 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 }
 
 @media (min-width: 761px) {
+	.insurance-card__top {
+		padding-top: clamp(0.95rem, 1.1vw, 1.2rem);
+	}
+
 	.insurance-card__heading {
 		position: relative;
 		display: block;
@@ -191,7 +195,7 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 
 	.insurance-card__subject-badge {
 		position: absolute;
-		top: -0.42rem;
+		top: -0.28rem;
 		right: 0;
 		transform: translateY(-100%);
 	}
