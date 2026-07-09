@@ -16,19 +16,22 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 	display: inline-flex;
 }
 
-.insurance-card {
-	position: relative;
+.insurance-card__heading {
+	display: flex;
+	align-items: center;
+	gap: clamp(0.45rem, 0.9vw, 0.65rem);
+	min-width: 0;
+	max-width: 100%;
+	flex-wrap: wrap;
 }
 
 .insurance-card__subject-badge {
-	position: absolute;
-	top: 0.85rem;
-	right: 0.85rem;
+	position: static;
 	z-index: 2;
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	max-width: calc(100% - 1.7rem);
+	max-width: 100%;
 	padding: 0.32rem 0.62rem;
 	border-radius: 999px;
 	border: 1px solid rgba(255, 191, 0, 0.30);
@@ -161,16 +164,38 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 	color: var(--color-gold);
 }
 
+@media (min-width: 641px) {
+	.insurance-card__heading {
+		justify-content: flex-start;
+	}
+}
+
 @media (max-width: 640px) {
+	.insurance-card__heading {
+		justify-content: center;
+		text-align: center;
+	}
+
 	.insurance-card__subject-badge {
-		top: 0.7rem;
-		right: 0.7rem;
-		font-size: 0.56rem;
-		padding: 0.28rem 0.5rem;
+		font-size: 0.58rem;
+		padding: 0.28rem 0.52rem;
+		letter-spacing: 0.45px;
 	}
 
 	.insurance-catalog-controls__main,
 	.insurance-catalog-controls__service {
 		justify-content: center;
+	}
+}
+
+@media (max-width: 420px) {
+	.insurance-card__heading {
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+
+	.insurance-card__subject-badge {
+		font-size: 0.55rem;
+		padding: 0.26rem 0.48rem;
 	}
 }
