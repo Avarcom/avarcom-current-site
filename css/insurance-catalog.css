@@ -16,16 +16,29 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 	display: inline-flex;
 }
 
+.insurance-card__top {
+	justify-content: center;
+}
+
 .insurance-card__heading {
-	display: flex;
+	display: grid;
+	grid-template-columns: minmax(0, max-content);
 	align-items: center;
-	gap: clamp(0.45rem, 0.9vw, 0.65rem);
+	justify-items: start;
+	row-gap: 0.32rem;
 	min-width: 0;
 	max-width: 100%;
-	flex-wrap: wrap;
+}
+
+.insurance-card__title {
+	grid-column: 1;
+	grid-row: 2;
 }
 
 .insurance-card__subject-badge {
+	grid-column: 1;
+	grid-row: 1;
+	justify-self: end;
 	position: static;
 	z-index: 2;
 	display: inline-flex;
@@ -164,19 +177,38 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 	color: var(--color-gold);
 }
 
-@media (min-width: 641px) {
+@media (max-width: 760px) and (min-width: 641px) {
+	.insurance-card__top {
+		justify-content: center;
+	}
+
 	.insurance-card__heading {
-		justify-content: flex-start;
+		justify-items: start;
+		row-gap: 0.28rem;
+	}
+
+	.insurance-card__subject-badge {
+		font-size: 0.60rem;
+		padding: 0.28rem 0.54rem;
+		letter-spacing: 0.48px;
 	}
 }
 
 @media (max-width: 640px) {
 	.insurance-card__heading {
-		justify-content: center;
+		grid-template-columns: 1fr;
+		justify-items: center;
 		text-align: center;
+		row-gap: 0.42rem;
+	}
+
+	.insurance-card__title {
+		grid-row: 1;
 	}
 
 	.insurance-card__subject-badge {
+		grid-row: 2;
+		justify-self: center;
 		font-size: 0.58rem;
 		padding: 0.28rem 0.52rem;
 		letter-spacing: 0.45px;
@@ -190,8 +222,7 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 
 @media (max-width: 420px) {
 	.insurance-card__heading {
-		flex-direction: column;
-		gap: 0.45rem;
+		row-gap: 0.45rem;
 	}
 
 	.insurance-card__subject-badge {
