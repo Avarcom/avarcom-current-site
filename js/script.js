@@ -39,18 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 3. ПРИБИРАННЯ СЛУЖБОВИХ LABEL-РЯДКІВ
-	// ==========================================
-	const roomLabels = document.querySelectorAll(
-		'.insurance-room__label, .dtp-room__label, .expertise-room__label, .legal-room__label, .blog-room__label'
-	);
-
-	roomLabels.forEach((label) => {
-		label.remove();
-	});
-
-	// ==========================================
-	// 4. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
+	// 3. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
 	// ==========================================
 	const guideDescriptions = document.querySelectorAll('.opt-desc');
 	guideDescriptions.forEach((description) => {
@@ -60,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	// ==========================================
-	// 5. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
+	// 4. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
 	// ==========================================
 
 	const chatBtn = document.querySelector('.chat-dropdown__btn');
@@ -137,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 6. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
+// 5. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
 // ==========================================
 document.addEventListener('keydown', function (e) {
 	if (e.key === 'Escape') {
