@@ -204,14 +204,25 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 @media (max-width: 760px) and (min-width: 641px) {
 	.insurance-card__top {
 		justify-content: center;
+		padding-top: 0.95rem;
 	}
 
 	.insurance-card__heading {
-		justify-items: start;
-		row-gap: 0.28rem;
+		position: relative;
+		display: block;
+		width: max-content;
+	}
+
+	.insurance-card__title {
+		grid-column: auto;
+		grid-row: auto;
 	}
 
 	.insurance-card__subject-badge {
+		position: absolute;
+		top: -0.26rem;
+		right: 0;
+		transform: translateY(-100%);
 		font-size: 0.60rem;
 		padding: 0.28rem 0.54rem;
 		letter-spacing: 0.48px;
