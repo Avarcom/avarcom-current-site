@@ -1,65 +1,9 @@
-(function initPageTransitionStylesheet() {
-	if (document.querySelector('link[data-page-transition-css="true"]')) return;
-
-	const link = document.createElement('link');
-	const isNestedInsurancePage = window.location.pathname.includes('/insurance/');
-
-	link.rel = 'stylesheet';
-	link.href = isNestedInsurancePage ? '../css/page-transition.css' : 'css/page-transition.css';
-	link.dataset.pageTransitionCss = 'true';
-	document.head.appendChild(link);
-})();
-
 document.addEventListener("DOMContentLoaded", function () {
 
 	// ==========================================
-	// 1. ПЛАВНИЙ ПЕРЕХІД МІЖ СТОРІНКАМИ
+	// 1. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
 	// ==========================================
-	const PAGE_TRANSITION_DELAY = 180;
 	const header = document.querySelector('.header');
-	const body = document.body;
-
-	body.classList.add('page-transition-enabled');
-
-	requestAnimationFrame(() => {
-		body.classList.add('page-ready');
-	});
-
-	window.addEventListener('pageshow', () => {
-		body.classList.remove('page-leaving');
-		requestAnimationFrame(() => {
-			body.classList.add('page-ready');
-		});
-	});
-
-	document.addEventListener('click', function (event) {
-		const link = event.target.closest('a[href]');
-
-		if (!link) return;
-		if (event.defaultPrevented) return;
-		if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-		if (link.target && link.target !== '_self') return;
-		if (link.hasAttribute('download')) return;
-
-		const url = new URL(link.getAttribute('href'), window.location.href);
-		const isHttpLink = url.protocol === 'http:' || url.protocol === 'https:';
-		const isSameOrigin = url.origin === window.location.origin;
-		const isSamePageAnchor = url.pathname === window.location.pathname && url.hash;
-
-		if (!isHttpLink || !isSameOrigin || isSamePageAnchor) return;
-
-		event.preventDefault();
-		body.classList.remove('page-ready');
-		body.classList.add('page-leaving');
-
-		window.setTimeout(() => {
-			window.location.href = url.href;
-		}, PAGE_TRANSITION_DELAY);
-	});
-
-	// ==========================================
-	// 2. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
-	// ==========================================
 	function checkScroll() {
 		let scrollPos = window.scrollY;
 		if (scrollPos > 10) { header.classList.add('scroll'); }
@@ -71,10 +15,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 3. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
+	// 2. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
 	// ==========================================
 	const burger = document.querySelector('.header__burger');
 	const menuBody = document.querySelector('.header__body');
+	const body = document.body;
 
 	if (burger && menuBody) {
 		burger.addEventListener("click", function () {
@@ -94,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 4. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
+	// 3. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
 	// ==========================================
 	const guideDescriptions = document.querySelectorAll('.opt-desc');
 	guideDescriptions.forEach((description) => {
@@ -104,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	// ==========================================
-	// 5. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
+	// 4. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
 	// ==========================================
 
 	const chatBtn = document.querySelector('.chat-dropdown__btn');
@@ -181,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 6. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
+// 5. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
 // ==========================================
 document.addEventListener('keydown', function (e) {
 	if (e.key === 'Escape') {
