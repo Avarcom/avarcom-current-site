@@ -177,6 +177,26 @@ body.insurance-catalog-open .insurance-modal__tabs [data-product-tab] {
 	color: var(--color-gold);
 }
 
+@media (min-width: 761px) {
+	.insurance-card__heading {
+		position: relative;
+		display: block;
+		width: max-content;
+	}
+
+	.insurance-card__title {
+		grid-column: auto;
+		grid-row: auto;
+	}
+
+	.insurance-card__subject-badge {
+		position: absolute;
+		top: -0.42rem;
+		right: 0;
+		transform: translateY(-100%);
+	}
+}
+
 @media (max-width: 760px) and (min-width: 641px) {
 	.insurance-card__top {
 		justify-content: center;
