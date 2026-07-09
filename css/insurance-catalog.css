@@ -8,10 +8,6 @@ body.insurance-focus-mode .insurance-modal__tabs [data-product-tab]:not([data-pr
 	display: none;
 }
 
-body.insurance-focus-mode .insurance-card__subject-badge {
-	display: none;
-}
-
 body.insurance-catalog-open .insurance-products__grid > .insurance-card--product {
 	display: flex;
 }
