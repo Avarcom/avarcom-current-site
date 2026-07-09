@@ -1,7 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 	// ==========================================
-	// 1. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
+	// 1. LAUNCH VISIBILITY GATE
+	// ==========================================
+	const launchHiddenLinks = document.querySelectorAll('a[href="blog.html"], a[href="../blog.html"]');
+
+	launchHiddenLinks.forEach((link) => {
+		const menuItem = link.closest('.menu__item');
+		if (menuItem) {
+			menuItem.remove();
+			return;
+		}
+
+		link.remove();
+	});
+
+	// ==========================================
+	// 2. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
 	// ==========================================
 	const header = document.querySelector('.header');
 	function checkScroll() {
@@ -15,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 2. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
+	// 3. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
 	// ==========================================
 	const burger = document.querySelector('.header__burger');
 	const menuBody = document.querySelector('.header__body');
@@ -39,7 +54,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// ==========================================
-	// 3. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
+	// 4. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
 	// ==========================================
 	const guideDescriptions = document.querySelectorAll('.opt-desc');
 	guideDescriptions.forEach((description) => {
@@ -49,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	});
 
 	// ==========================================
-	// 4. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
+	// 5. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
 	// ==========================================
 
 	const chatBtn = document.querySelector('.chat-dropdown__btn');
@@ -126,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // ==========================================
-// 5. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
+// 6. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
 // ==========================================
 document.addEventListener('keydown', function (e) {
 	if (e.key === 'Escape') {
