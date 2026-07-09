@@ -62,6 +62,29 @@
 			content: "SG";
 		}
 
+		.chat-dropdown__menu {
+			top: 52%;
+			width: min(90%, 320px);
+			max-height: calc(100svh - 8.5rem);
+			overflow-y: auto;
+		}
+
+		@media (max-width: 900px) {
+			.chat-dropdown__menu {
+				top: 53%;
+				width: min(88%, calc(100vw - 2rem));
+				max-height: calc(100svh - 8rem);
+			}
+		}
+
+		@media (max-width: 640px) {
+			.chat-dropdown__menu {
+				top: 54%;
+				width: min(88%, calc(100vw - 1.5rem));
+				max-height: calc(100svh - 7.5rem);
+			}
+		}
+
 		@media (max-width: 420px) {
 			.hero-content {
 				width: min(100%, calc(100vw - 1.5rem));
@@ -88,10 +111,6 @@
 			}
 
 			.chat-dropdown__menu {
-				top: 54%;
-				width: min(88%, calc(100vw - 1.5rem));
-				max-height: calc(100svh - 7.5rem);
-				overflow-y: auto;
 				padding: clamp(1.15rem, 4vw, 1.5rem);
 			}
 
@@ -479,6 +498,7 @@
 						<div class="step-item">
 							<div class="step-item__number">03</div>
 							<h3 class="step-item__title">Оцінка та врегулювання</h3>
+
 							<p class="step-item__text">
 								Проводимо незалежну експертизу та допомагаємо підготувати обґрунтовану позицію для страхової компанії.
 							</p>
