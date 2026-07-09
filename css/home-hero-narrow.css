@@ -1,0 +1,51 @@
+/* ======================================================================== */
+/* ГОЛОВНА: HERO — ВУЗЬКІ ЕКРАНИ 420–320 */
+/* Файл: css/home-hero-narrow.css */
+/* ======================================================================== */
+
+@media (max-width: 420px) {
+	.hero-title {
+		font-size: clamp(1.44rem, 7.45vw, 1.86rem);
+		line-height: 1.12;
+		letter-spacing: -0.025em;
+		margin-bottom: 0.92rem;
+	}
+
+	.hero-title span {
+		display: block;
+		font-size: clamp(1.18rem, 6.25vw, 1.55rem);
+		line-height: 1.12;
+		-webkit-text-stroke-width: 0.85px;
+		letter-spacing: -0.018em;
+		white-space: normal;
+		max-width: 100%;
+	}
+}
+
+@media (max-width: 360px) {
+	.hero-title {
+		font-size: clamp(1.32rem, 7.2vw, 1.6rem);
+		line-height: 1.14;
+	}
+
+	.hero-title span {
+		font-size: clamp(1.05rem, 6.15vw, 1.34rem);
+		line-height: 1.14;
+		-webkit-text-stroke-width: 0.78px;
+	}
+}
+
+@media (max-width: 330px) {
+	.hero-title {
+		font-size: 1.28rem;
+		line-height: 1.15;
+		letter-spacing: -0.018em;
+	}
+
+	.hero-title span {
+		font-size: 1.04rem;
+		line-height: 1.15;
+		-webkit-text-stroke-width: 0.72px;
+		letter-spacing: -0.012em;
+	}
+}
