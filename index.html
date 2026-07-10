@@ -85,10 +85,10 @@
 			}
 		}
 
-		@media (min-width: 993px) and (max-width: 1181px) {
+		@media (min-width: 993px) {
 			.main-section__container {
-				grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 320px);
-				column-gap: clamp(4rem, 7vw, 5.5rem);
+				grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+				gap: 4rem;
 			}
 
 			.hero-content,
@@ -102,7 +102,7 @@
 
 			.glass-card-slim {
 				width: 100%;
-				max-width: none;
+				max-width: 360px;
 			}
 		}
 
