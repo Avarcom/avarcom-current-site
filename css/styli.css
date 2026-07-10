@@ -25,7 +25,7 @@ textarea:focus-visible {
 	outline-offset: 3px;
 }
 
-/* Другий рядок hero: чистий акцент і напрям від старту до результату. */
+/* Другий рядок hero: жовтий акцент із блакитною напрямною лінією. */
 .main-section .hero-title > span {
 	position: relative;
 	display: block;
@@ -44,28 +44,17 @@ textarea:focus-visible {
 	content: "";
 	position: absolute;
 	left: 0;
-	right: 1.4rem;
+	right: 0;
 	bottom: 0.2rem;
 	height: 2px;
 	border-radius: 999px;
 	background: linear-gradient(
 		90deg,
-		rgba(255, 191, 0, 0.95) 0%,
-		rgba(255, 191, 0, 0.95) 78%,
-		rgba(255, 191, 0, 0.28) 100%
+		#14a8ff 0%,
+		#078bd9 72%,
+		rgba(7, 139, 217, 0.32) 100%
 	);
-	box-shadow: 0 0 8px rgba(255, 191, 0, 0.18);
-}
-
-.main-section .hero-title > span::after {
-	content: "→";
-	position: absolute;
-	right: 0;
-	bottom: -0.08rem;
-	color: var(--color-gold);
-	font-size: 1rem;
-	font-weight: 700;
-	line-height: 1;
+	box-shadow: 0 0 8px rgba(20, 168, 255, 0.26);
 }
 
 @media (max-width: 992px) {
@@ -80,13 +69,8 @@ textarea:focus-visible {
 	}
 
 	.main-section .hero-title > span::before {
-		right: 1.15rem;
+		right: 0;
 		bottom: 0.14rem;
-	}
-
-	.main-section .hero-title > span::after {
-		bottom: -0.12rem;
-		font-size: 0.88rem;
 	}
 }
 
