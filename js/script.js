@@ -1,6 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
 
 	// ==========================================
+	// 0. HOME HERO: ВЕРТИКАЛЬНА АДАПТАЦІЯ РЕЖИМУ З БУРГЕРОМ
+	// ==========================================
+	if (document.querySelector('.main-section .hero-cards')) {
+		const homeHeroResponsiveStyle = document.createElement('style');
+		homeHeroResponsiveStyle.textContent = `
+			@media (min-width: 581px) and (max-width: 800px) {
+				.main-section__container {
+					gap: 1.1rem;
+				}
+
+				.hero-actions {
+					margin: 0 auto 0.55rem;
+				}
+			}
+		`;
+		document.head.appendChild(homeHeroResponsiveStyle);
+	}
+
+	// ==========================================
 	// 1. LAUNCH VISIBILITY GATE
 	// ==========================================
 	const launchHiddenLinks = document.querySelectorAll('a[href="blog.html"], a[href="../blog.html"]');
