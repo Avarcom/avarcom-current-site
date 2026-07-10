@@ -185,11 +185,24 @@
 			}
 		}
 
-		@media (min-width: 801px) and (max-width: 992px) {
-			.header__body {
-				transform: translateX(clamp(0px, calc(31.4vw - 251.5px), 60px));
+		@media (min-width: 871px) and (max-width: 992px) {
+			.logo-full {
+				display: block !important;
+				width: clamp(96px, 10.5vw, 104px);
 			}
 
+			.logo-short {
+				display: none !important;
+			}
+		}
+
+		@media (min-width: 801px) and (max-width: 870px) {
+			.header__body {
+				transform: translateX(clamp(0px, calc(57.97vw - 464.35px), 40px));
+			}
+		}
+
+		@media (min-width: 801px) and (max-width: 992px) {
 			.main-section__container {
 				gap: 1.25rem;
 			}
