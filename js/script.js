@@ -25,6 +25,16 @@ document.addEventListener("DOMContentLoaded", function () {
 					margin: 0 auto 0.4rem;
 				}
 			}
+
+			@media (max-width: 420px) {
+				.main-section__container {
+					gap: 0.7rem;
+				}
+
+				.hero-actions {
+					margin: 0 auto 0.3rem;
+				}
+			}
 		`;
 		document.head.appendChild(homeHeroResponsiveStyle);
 	}
