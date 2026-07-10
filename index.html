@@ -85,9 +85,24 @@
 			}
 		}
 
-		@media (min-width: 993px) and (max-width: 1248px) {
+		@media (min-width: 993px) and (max-width: 1181px) {
+			.main-section__container {
+				grid-template-columns: minmax(0, 1fr) clamp(300px, 27vw, 320px);
+				column-gap: clamp(4rem, 7vw, 5.5rem);
+			}
+
+			.hero-content,
+			.hero-right-wrapper {
+				min-width: 0;
+			}
+
+			.hero-right-wrapper {
+				justify-self: end;
+			}
+
 			.glass-card-slim {
-				max-width: clamp(320px, calc(39vw - 127px), 360px);
+				width: 100%;
+				max-width: none;
 			}
 		}
 
