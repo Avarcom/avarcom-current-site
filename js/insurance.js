@@ -108,6 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	};
 
 	let currentProductKey = "avtotsyvilka";
+	let lastFocusedElement = null;
 
 	function selectField(name, label, required, options) {
 		return { type: "select", name, label, required, options };
@@ -150,6 +151,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	function openModal(productKey = "avtotsyvilka") {
 		const normalizedKey = normalizeProductKey(productKey);
 
+		lastFocusedElement = document.activeElement instanceof HTMLElement ? document.activeElement : null;
 		modal.classList.add("active");
 		modal.setAttribute("aria-hidden", "false");
 		document.body.classList.add("lock");
@@ -163,6 +165,9 @@ document.addEventListener("DOMContentLoaded", () => {
 		modal.classList.remove("active");
 		modal.setAttribute("aria-hidden", "true");
 		document.body.classList.remove("lock");
+
+		if (lastFocusedElement?.isConnected) lastFocusedElement.focus();
+		lastFocusedElement = null;
 	}
 
 	function setProduct(productKey) {
@@ -269,11 +274,14 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function initInsuranceCatalogArchitecture() {
+		const productsBlock = document.querySelector(".insurance-products");
+		if (!productsBlock) return;
+
 		ensureCatalogStylesheet();
 		document.body.classList.toggle("insurance-focus-mode", catalogConfig.focusMode);
 		document.body.classList.toggle("insurance-catalog-open", !catalogConfig.focusMode);
 
-		const cards = document.querySelectorAll(".insurance-card--product");
+		const cards = productsBlock.querySelectorAll(".insurance-card--product");
 
 		cards.forEach((card) => {
 			const productButton = card.querySelector(".insurance-open-modal[data-product]");
@@ -364,16 +372,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
 	function initSubjectBadges(cards) {
 		cards.forEach((card) => {
+			const heading = card.querySelector(".insurance-card__heading");
 			const subjectKey = card.dataset.insuranceSubject || "all";
 			const label = catalogConfig.subjectBadgeLabels[subjectKey] || catalogConfig.subjectBadgeLabels.all;
 
-			if (card.querySelector("[data-insurance-subject-badge]")) return;
+			if (!heading || card.querySelector("[data-insurance-subject-badge]")) return;
 
 			const badge = document.createElement("span");
 			badge.className = "insurance-card__subject-badge";
 			badge.dataset.insuranceSubjectBadge = subjectKey;
 			badge.textContent = label;
-			card.appendChild(badge);
+			heading.appendChild(badge);
 		});
 	}
 
@@ -410,7 +419,11 @@ document.addEventListener("DOMContentLoaded", () => {
 	}
 
 	function setFavoriteProducts(productsList) {
-		localStorage.setItem(catalogConfig.favoriteStorageKey, JSON.stringify(productsList));
+		try {
+			localStorage.setItem(catalogConfig.favoriteStorageKey, JSON.stringify(productsList));
+		} catch (error) {
+			// У приватному режимі або забороненому сховищі список просто не зберігається.
+		}
 	}
 
 	function toggleFavoriteProduct(productKey) {
