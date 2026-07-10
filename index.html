@@ -85,25 +85,33 @@
 			}
 		}
 
-		@media (min-width: 421px) and (max-width: 640px) {
-			.guide-option-btn {
-				gap: 0.75rem;
-				padding: 1.1rem;
-			}
+		.guide-option-btn {
+			display: grid;
+			grid-template-columns: 2rem minmax(0, 1fr) auto;
+			column-gap: 0.75rem;
+		}
 
-			.guide-opt-text {
-				min-width: 0;
+		.guide-opt-text {
+			min-width: 0;
+		}
+
+		.opt-title {
+			white-space: nowrap;
+		}
+
+		.opt-arrow {
+			margin-left: 0;
+		}
+
+		@media (min-width: 421px) {
+			.guide-option-btn {
+				padding: 1.1rem;
 			}
 
 			.opt-title {
 				font-size: 1.05rem;
 				line-height: 1.1;
 				letter-spacing: -0.015em;
-				white-space: nowrap;
-			}
-
-			.opt-arrow {
-				margin-left: 0.25rem;
 			}
 		}
 
@@ -223,7 +231,8 @@
 			}
 
 			.guide-option-btn {
-				gap: clamp(0.45rem, 2.2vw, 0.8rem);
+				grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+				column-gap: clamp(0.45rem, 2.2vw, 0.8rem);
 				padding: clamp(0.86rem, 3.2vw, 1rem);
 			}
 
@@ -231,15 +240,10 @@
 				font-size: clamp(1.25rem, 5vw, 1.6rem);
 			}
 
-			.guide-opt-text {
-				min-width: 0;
-			}
-
 			.opt-title {
 				font-size: clamp(0.78rem, 4vw, 1rem);
 				line-height: 1.08;
 				letter-spacing: -0.02em;
-				white-space: nowrap;
 			}
 
 			.opt-desc {
@@ -249,7 +253,6 @@
 
 			.opt-arrow {
 				font-size: clamp(1rem, 4.5vw, 1.3rem);
-				margin-left: clamp(0.25rem, 1.5vw, 0.5rem);
 			}
 		}
 
