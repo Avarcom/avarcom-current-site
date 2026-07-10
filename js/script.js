@@ -1,43 +1,5 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-	// ==========================================
-	// 0. HOME HERO: ВЕРТИКАЛЬНА АДАПТАЦІЯ РЕЖИМУ З БУРГЕРОМ
-	// ==========================================
-	if (document.querySelector('.main-section .hero-cards')) {
-		const homeHeroResponsiveStyle = document.createElement('style');
-		homeHeroResponsiveStyle.textContent = `
-			@media (min-width: 581px) and (max-width: 800px) {
-				.main-section__container {
-					gap: 1.1rem;
-				}
-
-				.hero-actions {
-					margin: 0 auto 0.55rem;
-				}
-			}
-
-			@media (min-width: 421px) and (max-width: 580px) {
-				.main-section__container {
-					gap: 0.9rem;
-				}
-
-				.hero-actions {
-					margin: 0 auto 0.4rem;
-				}
-			}
-
-			@media (max-width: 420px) {
-				.main-section__container {
-					gap: 0.7rem;
-				}
-
-				.hero-actions {
-					margin: 0 auto 0.3rem;
-				}
-			}
-		`;
-		document.head.appendChild(homeHeroResponsiveStyle);
-	}
+document.addEventListener("DOMContentLoaded", () => {
+	const body = document.body;
 
 	// ==========================================
 	// 1. LAUNCH VISIBILITY GATE
@@ -45,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	const launchHiddenLinks = document.querySelectorAll('a[href="blog.html"], a[href="../blog.html"]');
 
 	launchHiddenLinks.forEach((link) => {
-		const menuItem = link.closest('.menu__item');
+		const menuItem = link.closest(".menu__item");
 		if (menuItem) {
 			menuItem.remove();
 			return;
@@ -54,199 +16,146 @@ document.addEventListener("DOMContentLoaded", function () {
 		link.remove();
 	});
 
-	const launchTextReplacements = [
-		{
-			selector: '.glass-card-slim__desc',
-			from: 'Автоцивілка, КАСКО, Зелена картка',
-			to: 'Автоцивілка та додатковий захист ДЦВ'
-		},
-		{
-			selector: '.service-item__text',
-			from: 'автоцивілка, КАСКО, Зелена картка, туристичне страхування та інші напрями.',
-			to: 'автоцивілка та додатковий захист ДЦВ.'
-		}
-	];
-
-	launchTextReplacements.forEach(({ selector, from, to }) => {
-		document.querySelectorAll(selector).forEach((element) => {
-			element.textContent = element.textContent.replace(from, to);
-		});
-	});
-
 	// ==========================================
-	// 2. РОЗМІЩЕННЯ БЕЙДЖА ПРЕДМЕТА СТРАХУВАННЯ
+	// 2. HEADER SCROLL STATE
 	// ==========================================
-	const insuranceProductsGrid = document.querySelector('.insurance-products__grid');
+	const header = document.querySelector(".header");
 
-	function placeInsuranceSubjectBadges() {
-		document.querySelectorAll('.insurance-card--product').forEach((card) => {
-			const heading = card.querySelector('.insurance-card__heading');
-			const badge = card.querySelector('[data-insurance-subject-badge]');
-
-			if (!heading || !badge || badge.parentElement === heading) return;
-			heading.appendChild(badge);
-		});
+	function updateHeaderScrollState() {
+		if (!header) return;
+		header.classList.toggle("scroll", window.scrollY > 10);
 	}
 
-	if (insuranceProductsGrid) {
-		const badgeObserver = new MutationObserver(placeInsuranceSubjectBadges);
-		badgeObserver.observe(insuranceProductsGrid, { childList: true, subtree: true });
-		placeInsuranceSubjectBadges();
-		requestAnimationFrame(placeInsuranceSubjectBadges);
-	}
-
-	// ==========================================
-	// 3. ЕФЕКТ СКРОЛУ ДЛЯ ШАПКИ
-	// ==========================================
-	const header = document.querySelector('.header');
-	function checkScroll() {
-		let scrollPos = window.scrollY;
-		if (scrollPos > 10) { header.classList.add('scroll'); }
-		else { header.classList.remove('scroll'); }
-	}
 	if (header) {
-		checkScroll();
-		window.addEventListener('scroll', checkScroll);
+		updateHeaderScrollState();
+		window.addEventListener("scroll", updateHeaderScrollState, { passive: true });
 	}
 
 	// ==========================================
-	// 4. БУРГЕР-МЕНЮ (МОБІЛЬНЕ)
+	// 3. SHARED OVERLAY STATE
 	// ==========================================
-	const burger = document.querySelector('.header__burger');
-	const menuBody = document.querySelector('.header__body');
-	const body = document.body;
+	const burger = document.querySelector(".header__burger");
+	const menuBody = document.querySelector(".header__body");
+
+	const chatButton = document.querySelector(".chat-dropdown__btn");
+	const chatDropdown = document.querySelector(".chat-dropdown");
+	const chatMenu = document.querySelector(".chat-dropdown__menu");
+	const chatCloseButton = document.querySelector(".chat-close-btn");
+
+	const guideButton = document.querySelector(".btn-hero-guide");
+	const guideModal = document.querySelector(".guide-modal-wrapper");
+	const guideCloseButton = document.querySelector(".guide-close-btn");
+	const guideBackdrop = document.querySelector(".guide-backdrop");
+
+	function syncBodyLock() {
+		const hasOpenOverlay = Boolean(
+			menuBody?.classList.contains("active") ||
+			chatDropdown?.classList.contains("active") ||
+			guideModal?.classList.contains("active") ||
+			document.querySelector(".insurance-modal.active")
+		);
+
+		body.classList.toggle("lock", hasOpenOverlay);
+	}
+
+	// ==========================================
+	// 4. MOBILE MENU
+	// ==========================================
+	function setMobileMenuOpen(isOpen) {
+		if (!burger || !menuBody) return;
+
+		burger.classList.toggle("active", isOpen);
+		menuBody.classList.toggle("active", isOpen);
+		burger.setAttribute("aria-expanded", String(isOpen));
+		burger.setAttribute("aria-label", isOpen ? "Закрити меню" : "Відкрити меню");
+		syncBodyLock();
+	}
 
 	if (burger && menuBody) {
-		burger.addEventListener("click", function () {
-			burger.classList.toggle('active');
-			menuBody.classList.toggle('active');
-			body.classList.toggle('lock');
+		burger.addEventListener("click", () => {
+			setMobileMenuOpen(!menuBody.classList.contains("active"));
 		});
 
-		const menuLinks = menuBody.querySelectorAll('.menu__link, .header__button');
-		menuLinks.forEach(link => {
-			link.addEventListener('click', () => {
-				burger.classList.remove('active');
-				menuBody.classList.remove('active');
-				body.classList.remove('lock');
-			});
+		menuBody.querySelectorAll(".menu__link").forEach((link) => {
+			link.addEventListener("click", () => setMobileMenuOpen(false));
 		});
 	}
 
 	// ==========================================
-	// 5. УТОЧНЕННЯ ПУБЛІЧНИХ МАРКЕТИНГОВИХ ФОРМУЛЮВАНЬ
+	// 5. CHAT DIALOG
 	// ==========================================
-	const guideDescriptions = document.querySelectorAll('.opt-desc');
-	guideDescriptions.forEach((description) => {
-		if (description.textContent.trim() === 'Як гарантовано отримати гроші') {
-			description.textContent = 'Як діяти для отримання страхової виплати';
-		}
+	function setChatOpen(isOpen, restoreFocus = false) {
+		if (!chatDropdown) return;
+
+		chatDropdown.classList.toggle("active", isOpen);
+		chatButton?.setAttribute("aria-expanded", String(isOpen));
+		chatMenu?.setAttribute("aria-hidden", String(!isOpen));
+		syncBodyLock();
+
+		if (!isOpen && restoreFocus) chatButton?.focus();
+	}
+
+	if (chatButton && chatDropdown) {
+		chatButton.addEventListener("click", (event) => {
+			event.stopPropagation();
+			setGuideOpen(false);
+			setChatOpen(!chatDropdown.classList.contains("active"));
+		});
+
+		chatCloseButton?.addEventListener("click", (event) => {
+			event.stopPropagation();
+			setChatOpen(false, true);
+		});
+
+		document.addEventListener("click", (event) => {
+			if (!chatDropdown.classList.contains("active")) return;
+			if (chatButton.contains(event.target)) return;
+			if (chatMenu?.contains(event.target)) return;
+			setChatOpen(false);
+		});
+
+		document.querySelectorAll(".chat-link").forEach((link) => {
+			link.addEventListener("click", () => setChatOpen(false));
+		});
+	}
+
+	// ==========================================
+	// 6. GUIDE DIALOG
+	// ==========================================
+	function setGuideOpen(isOpen, restoreFocus = false) {
+		if (!guideModal) return;
+
+		guideModal.classList.toggle("active", isOpen);
+		guideModal.setAttribute("aria-hidden", String(!isOpen));
+		guideButton?.setAttribute("aria-expanded", String(isOpen));
+		syncBodyLock();
+
+		if (!isOpen && restoreFocus) guideButton?.focus();
+	}
+
+	if (guideButton && guideModal) {
+		guideButton.addEventListener("click", (event) => {
+			event.stopPropagation();
+			setChatOpen(false);
+			setGuideOpen(true);
+		});
+
+		guideCloseButton?.addEventListener("click", () => setGuideOpen(false, true));
+		guideBackdrop?.addEventListener("click", () => setGuideOpen(false, true));
+
+		document.querySelectorAll(".guide-option-btn").forEach((option) => {
+			option.addEventListener("click", () => setGuideOpen(false));
+		});
+	}
+
+	// ==========================================
+	// 7. GLOBAL ESCAPE HANDLER
+	// ==========================================
+	document.addEventListener("keydown", (event) => {
+		if (event.key !== "Escape") return;
+
+		if (menuBody?.classList.contains("active")) setMobileMenuOpen(false);
+		if (chatDropdown?.classList.contains("active")) setChatOpen(false, true);
+		if (guideModal?.classList.contains("active")) setGuideOpen(false, true);
 	});
-
-	// ==========================================
-	// 6. ЛОГІКА ДЛЯ КНОПОК HERO-СЕКЦІЇ
-	// ==========================================
-
-	const chatBtn = document.querySelector('.chat-dropdown__btn');
-	const chatDropdown = document.querySelector('.chat-dropdown');
-	const chatCloseBtn = document.querySelector('.chat-close-btn');
-
-	const guideBtn = document.querySelector('.btn-hero-guide');
-	const guideModalWrapper = document.querySelector('.guide-modal-wrapper');
-	const guideCloseBtn = document.querySelector('.guide-close-btn');
-	const guideBackdrop = document.querySelector('.guide-backdrop');
-
-	function closeChat() {
-		if (chatDropdown) chatDropdown.classList.remove('active');
-	}
-
-	function closeGuide() {
-		if (guideModalWrapper) guideModalWrapper.classList.remove('active');
-	}
-
-	if (chatBtn && chatDropdown) {
-		chatBtn.addEventListener('click', function (e) {
-			e.stopPropagation();
-			closeGuide();
-			chatDropdown.classList.toggle('active');
-		});
-
-		if (chatCloseBtn) {
-			chatCloseBtn.addEventListener('click', function (e) {
-				e.stopPropagation();
-				closeChat();
-			});
-		}
-
-		document.addEventListener('click', function (e) {
-			if (chatDropdown.classList.contains('active') && !chatBtn.contains(e.target)) {
-				const menuBox = document.querySelector('.chat-dropdown__menu');
-				if (menuBox && !menuBox.contains(e.target)) {
-					closeChat();
-				}
-			}
-		});
-
-		const chatLinks = document.querySelectorAll('.chat-link');
-		chatLinks.forEach(link => {
-			link.addEventListener('click', closeChat);
-		});
-	}
-
-	if (guideBtn && guideModalWrapper) {
-		guideBtn.addEventListener('click', function (e) {
-			e.stopPropagation();
-			closeChat();
-			guideModalWrapper.classList.add('active');
-		});
-
-		if (guideCloseBtn) {
-			guideCloseBtn.addEventListener('click', function () {
-				closeGuide();
-			});
-		}
-
-		if (guideBackdrop) {
-			guideBackdrop.addEventListener('click', function () {
-				closeGuide();
-			});
-		}
-
-		const guideOptions = document.querySelectorAll('.guide-option-btn');
-		guideOptions.forEach(opt => {
-			opt.addEventListener('click', closeGuide);
-		});
-	}
-
-});
-
-// ==========================================
-// 7. ГЛОБАЛЬНІ ПОДІЇ (ЗАКРИТТЯ ПО ESC)
-// ==========================================
-document.addEventListener('keydown', function (e) {
-	if (e.key === 'Escape') {
-		const body = document.body;
-
-		const burger = document.querySelector('.header__burger');
-		const menuBody = document.querySelector('.header__body');
-		const header = document.querySelector('.header');
-
-		if (burger && burger.classList.contains('active')) {
-			burger.classList.remove('active');
-			menuBody.classList.remove('active');
-			if (header) header.classList.remove('menu-open');
-			body.classList.remove('lock');
-		}
-
-		const chatDropdown = document.querySelector('.chat-dropdown');
-		if (chatDropdown && chatDropdown.classList.contains('active')) {
-			chatDropdown.classList.remove('active');
-		}
-
-		const guideModal = document.querySelector('.guide-modal-wrapper');
-		if (guideModal && guideModal.classList.contains('active')) {
-			guideModal.classList.remove('active');
-			body.classList.remove('lock');
-		}
-	}
 });
