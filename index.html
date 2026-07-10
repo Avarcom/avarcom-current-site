@@ -220,7 +220,31 @@
 			}
 		}
 
+		@media (min-width: 581px) and (max-width: 800px) {
+			.main-section__container {
+				gap: 1.1rem;
+			}
+
+			.hero-actions {
+				margin: 0 auto 0.55rem;
+			}
+		}
+
+		@media (min-width: 421px) and (max-width: 580px) {
+			.main-section__container {
+				gap: 0.9rem;
+			}
+
+			.hero-actions {
+				margin: 0 auto 0.4rem;
+			}
+		}
+
 		@media (max-width: 420px) {
+			.main-section__container {
+				gap: 0.7rem;
+			}
+
 			.hero-content {
 				width: min(100%, calc(100vw - 1.5rem));
 			}
@@ -243,6 +267,10 @@
 				white-space: normal;
 				text-wrap: balance;
 				-webkit-text-stroke-width: 0.85px;
+			}
+
+			.hero-actions {
+				margin: 0 auto 0.3rem;
 			}
 
 			.chat-dropdown__menu {
@@ -383,7 +411,8 @@
 					<span class="btn-icon">📞</span> Виклик
 				</a>
 
-				<button class="header__burger" type="button" aria-label="Відкрити меню">
+				<button class="header__burger" type="button" aria-label="Відкрити меню"
+					aria-controls="headerMenuBody" aria-expanded="false">
 					<span></span>
 				</button>
 
@@ -410,19 +439,22 @@
 
 						<div class="hero-actions">
 
-							<button type="button" class="btn-hero-guide">
+							<button type="button" class="btn-hero-guide" aria-haspopup="dialog"
+								aria-controls="guideModal" aria-expanded="false">
 								<span class="icon-bell">🚨</span> Що робити у разі ДТП?
 							</button>
 
-							<div class="guide-modal-wrapper">
+							<div class="guide-modal-wrapper" id="guideModal" role="dialog" aria-modal="true"
+								aria-hidden="true" aria-labelledby="guideModalTitle">
 								<div class="guide-modal">
 									<div class="guide-modal__header">
-										<h3 class="guide-modal__title">Оберіть варіант</h3>
-										<button type="button" class="guide-close-btn">✕</button>
+										<h3 class="guide-modal__title" id="guideModalTitle">Оберіть варіант</h3>
+										<button type="button" class="guide-close-btn" aria-label="Закрити вікно">✕</button>
 									</div>
 
 									<div class="guide-modal__body">
-										<a href="https://t.me/avarkom_servic/390" target="_blank" class="guide-option-btn">
+										<a href="https://t.me/avarkom_servic/390" target="_blank" rel="noopener noreferrer"
+											class="guide-option-btn">
 											<span class="guide-opt-icon">📍</span>
 											<div class="guide-opt-text">
 												<span class="opt-title">Я ще на місці ДТП</span>
@@ -431,7 +463,8 @@
 											<span class="opt-arrow">→</span>
 										</a>
 
-										<a href="https://avarcom.in.ua/страхування/" target="_blank" class="guide-option-btn">
+										<a href="https://avarcom.in.ua/страхування/" target="_blank" rel="noopener noreferrer"
+											class="guide-option-btn">
 											<span class="guide-opt-icon">💰</span>
 											<div class="guide-opt-text">
 												<span class="opt-title">Отримати страхову виплату</span>
@@ -441,26 +474,31 @@
 										</a>
 									</div>
 								</div>
-								<div class="guide-backdrop"></div>
+								<div class="guide-backdrop" aria-hidden="true"></div>
 							</div>
 
 							<div class="chat-dropdown">
-								<button class="chat-dropdown__btn">
+								<button type="button" class="chat-dropdown__btn" aria-haspopup="dialog"
+									aria-controls="chatMenu" aria-expanded="false">
 									<span class="chat-icon">💬</span> Написати в чат
 									<span class="chat-arrow">▼</span>
 								</button>
 
-								<div class="chat-dropdown__menu">
-									<a href="https://t.me/avarcom_service" target="_blank" class="chat-link tg">
+								<div class="chat-dropdown__menu" id="chatMenu" role="dialog" aria-modal="true"
+									aria-hidden="true" aria-label="Оберіть месенджер">
+									<a href="https://t.me/avarcom_service" target="_blank" rel="noopener noreferrer"
+										class="chat-link tg">
 										<span class="messenger-icon">✈️</span> Telegram
 									</a>
 									<a href="viber://chat?number=%2B380671590059" class="chat-link vb">
 										<span class="messenger-icon">🟣</span> Viber
 									</a>
-									<a href="https://wa.me/380671590059" target="_blank" class="chat-link wa">
+									<a href="https://wa.me/380671590059" target="_blank" rel="noopener noreferrer"
+										class="chat-link wa">
 										<span class="messenger-icon">🟢</span> WhatsApp
 									</a>
-									<a href="https://signal.me/#p/+380671590059" target="_blank" class="chat-link sg">
+									<a href="https://signal.me/#p/+380671590059" target="_blank" rel="noopener noreferrer"
+										class="chat-link sg">
 										<span class="messenger-icon">🔵</span> Signal
 									</a>
 									<button type="button" class="chat-close-btn">Закрити ✕</button>
@@ -533,7 +571,7 @@
 
 							<p class="service-item__text">
 								Допомагаємо підібрати та оформити страховий продукт під реальну потребу клієнта:
-								автоцивілка, КАСКО, Зелена картка, туристичне страхування та інші напрями.
+								автоцивілка та додатковий захист ДЦВ.
 								Перед оформленням звертаємо увагу на умови, ліміти, строк дії та порядок дій у разі страхового випадку.
 							</p>
 
@@ -667,7 +705,7 @@
 						<a href="blog.html" class="footer__pill-link">Блог</a>
 
 						<a href="https://www.google.com/maps/place/Допомога+при+ДТП;+Отримати+страхову+виплату;+Європротокол;+Автоекспертиза./@50.407512,30.4220705,16.77z/data=!4m6!3m5!1s0x40d4c9694098ed99:0xe4cdfaa43f975a5f!8m2!3d50.4073807!4d30.422369!16s%2Fg%2F11fm_8mkvz?entry=ttu&g_ep=EgoyMDI2MDUwMi4wIKXMDSoASAFQAw%3D%3D"
-							target="_blank" class="footer__pill-link">
+							target="_blank" rel="noopener noreferrer" class="footer__pill-link">
 							Відгуки
 						</a>
 					</div>
